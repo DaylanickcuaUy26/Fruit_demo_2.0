@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - AI Fruit Recognition</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', Arial, sans-serif;
+            overflow: hidden;
+        }
+        .glass-form {
+            background: rgba(255,255,255,0.18);
+            border-radius: 32px;
+            box-shadow: 0 8px 40px 0 #a18cd144, 0 1.5px 8px #fbc2eb22;
+            padding: 48px 38px 32px 38px;
+            max-width: 370px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            animation: fadeIn 1.1s cubic-bezier(.4,2,.6,1);
+            transition: box-shadow 0.3s;
+            backdrop-filter: blur(18px) saturate(1.5) brightness(1.1);
+            -webkit-backdrop-filter: blur(18px) saturate(1.5) brightness(1.1);
+            border: 1.5px solid rgba(255,255,255,0.35);
+        }
+        .glass-form:hover {
+            box-shadow: 0 20px 60px 0 #fbc2eb55, 0 2px 12px #a18cd133;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.92) translateY(60px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .glass-form h2 {
+            color: #a18cd1;
+            margin-bottom: 18px;
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 1.2px;
+            text-shadow: 0 2px 8px #fff6;
+        }
+        .glass-form .fa-lemon {
+            color: #fbc2eb;
+            font-size: 2.8rem;
+            margin-bottom: 18px;
+            animation: fruitSpin 2.5s infinite linear;
+            filter: drop-shadow(0 2px 8px #fbc2eb88);
+        }
+        @keyframes fruitSpin {
+            0% { transform: rotate(-10deg); }
+            100% { transform: rotate(350deg); }
+        }
+        .glass-input {
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-radius: 18px;
+            border: 1.7px solid #e0e0e0;
+            font-size: 1.1rem;
+            background: rgba(255,255,255,0.5);
+            outline: none;
+            transition: border 0.25s, box-shadow 0.25s;
+            box-shadow: 0 1px 4px #a18cd111;
+        }
+        .glass-input:focus {
+            border: 1.7px solid #a18cd1;
+            box-shadow: 0 0 0 3px #a18cd133;
+            background: #fff;
+        }
+        .glass-btn {
+            background: linear-gradient(120deg, #a18cd1 0%, #fbc2eb 100%);
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 24px;
+            font-size: 1.18rem;
+            font-weight: 900;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 2px 12px #a18cd122;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-btn:after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.2);
+            border-radius: 100%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s, height 0.4s;
+            z-index: 0;
+        }
+        .glass-btn:hover:after {
+            width: 220%;
+            height: 600%;
+        }
+        .glass-btn:hover {
+            background: linear-gradient(90deg, #fbc2eb 0%, #a18cd1 100%);
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 8px 32px #fbc2eb33;
+        }
+        .glass-error {
+            color: #f857a6;
+            margin-top: 12px;
+            font-size: 1.08rem;
+            min-height: 24px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .glass-links {
+            margin-top: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+        }
+        .glass-link {
+            color: #a18cd1;
+            text-decoration: none;
+            font-size: 1.08rem;
+            font-weight: 700;
+            transition: color 0.2s, transform 0.2s, text-shadow 0.2s;
+            border-radius: 12px;
+            padding: 4px 12px;
+        }
+        .glass-link:hover {
+            color: #f857a6;
+            text-shadow: 0 2px 8px #fbc2eb33;
+            transform: scale(1.08);
+            background: rgba(255,255,255,0.18);
+        }
+        @media (max-width: 500px) {
+            .glass-form { padding: 18px 4vw; max-width: 98vw; }
+        }
+        .fruit-bg {
+            position: fixed;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            background: url('https://img.icons8.com/color/480/000000/banana.png'), url('https://img.icons8.com/color/480/000000/apple.png'), url('https://img.icons8.com/color/480/000000/grapes.png');
+            background-repeat: no-repeat;
+            background-position: 10% 20%, 80% 60%, 50% 80%;
+            background-size: 220px, 180px, 160px;
+            opacity: 0.13;
+            filter: blur(2px) saturate(1.2);
+            pointer-events: none;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="fruit-bg"></div>
+    <form class="glass-form" id="loginForm" onsubmit="return doLogin(event)">
+        <i class="fas fa-lemon"></i>
+        <h2>Đăng nhập AI Fruit</h2>
+        <input class="glass-input" id="username" type="text" placeholder="Tên đăng nhập" required autofocus>
+        <input class="glass-input" id="password" type="password" placeholder="Mật khẩu" required>
+        <button class="glass-btn" type="submit"><i class="fas fa-sign-in-alt"></i> Đăng nhập</button>
+        <div class="glass-error" id="loginError"></div>
+        <div class="glass-links">
+            <a href="/register" class="glass-link"><i class="fas fa-user-plus"></i> Đăng ký tài khoản</a>
+            <a href="/forgot-password" class="glass-link"><i class="fas fa-key"></i> Quên mật khẩu?</a>
+        </div>
+    </form>
+    <script>
+    async function doLogin(e) {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        try {
+            const res = await fetch('/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username, password})
+            });
+            const data = await res.json();
+            if (data.success) {
+                window.location.href = '/';
+            } else {
+                document.getElementById('loginError').textContent = data.error || 'Đăng nhập thất bại!';
+            }
+        } catch (err) {
+            document.getElementById('loginError').textContent = 'Không thể kết nối tới máy chủ!';
+        }
+    }
+    </script>
+</body>
+</html> 
